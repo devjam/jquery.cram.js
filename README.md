@@ -3,8 +3,8 @@ jquery.cram.js
 ## PLUGIN
 
 ### REQUIRE:
-*jquery.js
-*jquery.easing.js // on use ease
+jquery.js  
+jquery.easing.js // on use ease
 
 //--------------------------------------
 ### PARAMETERS:
