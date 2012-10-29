@@ -6,7 +6,7 @@ jquery.cram.js
 jquery.js  
 jquery.easing.js // on use ease
 
-//--------------------------------------
+
 ### PARAMETERS:
     itemSelector : "*",
     cellWidth : 100,
@@ -22,6 +22,7 @@ jquery.easing.js // on use ease
     	ease : null 
     }
 
+
 ### USAGE:
     $("#wrapper").cram({
     	itemSelector : ".item",
@@ -35,12 +36,15 @@ jquery.easing.js // on use ease
     	}
     });
 
+
 ---
+
 
 ## METHOD:
 
 ### setOptions
 change options
+
 
 #### PARAMETERS:
     itemSelector : "*",
@@ -57,28 +61,35 @@ change options
     	ease : null
     }
 
+
 #### USAGE:
     $("#wrapper").cram.setOptions({
     	cellWidth : 100,
     	cellHeight : 100,
     })
 
+
 ### update
 calculate masonry layout  
 update area width, area height, items position, spaces  
 trigger "onUpdate" on calculated.
 
+
 #### PARAMETERS: null
+
 
 #### USAGE:
     $("#wrapper").cram.update();
 
+
 ---
+
 
 ## PROPERTY:
 
 ### data("items")
 return items array
+
 
 #### RETURN:
     [
@@ -92,11 +103,15 @@ return items array
     	...
     ]
 
+
 #### USAGE:
     var items = $("#wrapper").data("items");
 
+
+
 ### data("spaces")
 return spaces array
+
 
 #### RETURN:
     [
@@ -109,11 +124,15 @@ return spaces array
     	...
     ]
 
+
 #### USAGE:
     var spaces = $("#wrapper").data("spaces");
 
+
+
 ### data("area")
 return layout area width and height
+
 
 #### RETURN:
     {
@@ -121,12 +140,15 @@ return layout area width and height
     	height : NUmber
     }
 
+
 #### USAGE:
     var areasize = $("wrapper").data("area");
     var areaWidth = areasize.width;
     var areaHeight = areasize.height;
 
+
 ---
+
 
 ## EVENT:
 
@@ -140,14 +162,19 @@ dispatch on updated.
     	var areasize = $(this).data("area");
     });
 
+
 ---
+
+
 ---
+
 
 ## CLASS
 only calculation operation
 
 ### REQUIRE:
 *jquery.js
+
 
 ### PARAMETERS:
     confing : {
@@ -163,6 +190,7 @@ only calculation operation
     width, // Number  
     list[array], // inner items  
     callback // function  
+
 
 ####list array
     [  
@@ -183,6 +211,7 @@ or
     	...  
     ]
 
+
 #### USAGE:
     var opt = null;
     var width = 800;
@@ -193,9 +222,10 @@ or
     	console.log data.area;
     });
 
+
 ### RETURN:
 
-##### data\[items\]
+##### data\[\"items\"\]
 items array  
 
     [  
@@ -211,7 +241,8 @@ items array
     	...  
     ]
 
-#### data\[spaces\]
+
+#### data\[\"spaces\"\]
 spaces array  
 
     [  
@@ -224,7 +255,8 @@ spaces array
     	...  
     ]
 
-#### data\[area\]
+
+#### data\[\"area\"\]
 layout area width and height
 
     {  
@@ -232,12 +264,15 @@ layout area width and height
     	height : NUmber  
     }
 
+
 ---
+
 
 ## METHOD:
 
 ### setOptions
 change options
+
 
 #### PARAMETERS:
     itemSelector : "*",  
@@ -249,6 +284,7 @@ change options
     isAutoLayout : true,  
     isDrawSpace : false,  
 
+
 #### USAGE:
     var cramlist = new cram();
     cramlist.setOptions({
@@ -256,8 +292,10 @@ change options
     })
 
 
+
 ### getData
 make items list, spaces list and area size
+
 
 #### PARAMETERS:
     width, // Number  
@@ -284,6 +322,7 @@ list array
     	...  
     ]
 
+
 #### USAGE:
     var width = 800;
     var list = $(".item");
@@ -294,9 +333,11 @@ list array
     	console.log data.area;
     });
 
+
 ### RETURN:
 
-##### data\[items\]
+
+##### data\[\"items\"\]
 items array  
 
     [  
@@ -312,7 +353,8 @@ items array
     	...  
     ]
 
-#### data\[spaces\]
+
+#### data\[\"spaces\"\]
 spaces array  
 
     [  
@@ -325,7 +367,8 @@ spaces array
     	...  
     ]
 
-#### data\[area\]
+
+#### data\[\"area\"\]
 layout area width and height
 
     {  
