@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js ie ie6" lang="ja"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js ie ie7" lang="ja"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js ie ie8" lang="ja"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js ie ie9" lang="ja"> <![endif]-->
+<!--[if (gt IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--> <html class="no-js" lang="ja"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>jQuery.cram.js samle</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+            .item {
+                cursor: pointer;
+            }
+        </style>
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <div id="top"></div>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="http://devjam.github.com/jquery.cram.js/">jQuery.cram.js</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="https://github.com/devjam/jquery.cram.js">github</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li><a href="index.html">sample1: no animate</a></li>
+                <li><a href="sample2.html">sample2: Pinterest</a></li>
+                <li><a href="sample3.html">sample3: multi width</a></li>
+                <li><a href="sample4.html">sample4: draw spaces</a></li>
+                <li class="active"><a href="sample5.html">sample5: only calculation</a></li>
+            </ul>
+            <h2>click to toggle expand</h2>
+            <ul id="items" class="clearfix">
+                <li class="item col2"><section class="box row1"><h1>1</h1></section></li>
+                <li class="item col4"><section class="box row1"><h1>2</h1></section></li>
+                <li class="item col2"><section class="box row2"><h1>3</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>4</h1></section></li>
+                <li class="item col6"><section class="box row1"><h1>5</h1></section></li>
+                <li class="item col2"><section class="box row3"><h1>6</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>7</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>8</h1></section></li>
+                <li class="item col4"><section class="box row2"><h1>9</h1></section></li>
+                <li class="item col6"><section class="box row1"><h1>10</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>11</h1></section></li>
+                <li class="item col2"><section class="box row3"><h1>12</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>13</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>14</h1></section></li>
+                <li class="item col4"><section class="box row2"><h1>15</h1></section></li>
+                <li class="item col4"><section class="box row1"><h1>16</h1></section></li>
+                <li class="item col6"><section class="box row1"><h1>17</h1></section></li>
+                <li class="item col6"><section class="box row3"><h1>18</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>19</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>20</h1></section></li>
+                <li class="item col2"><section class="box row2"><h1>21</h1></section></li>
+                <li class="item col4"><section class="box row1"><h1>22</h1></section></li>
+                <li class="item col6"><section class="box row1"><h1>23</h1></section></li>
+                <li class="item col2"><section class="box row3"><h1>24</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>25</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>26</h1></section></li>
+                <li class="item col2"><section class="box row2"><h1>27</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>28</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>29</h1></section></li>
+                <li class="item col2"><section class="box row1"><h1>30</h1></section></li>
+            </ul>
+            <hr>
+
+            <footer>
+                <p><i class="icon-circle-arrow-up"></i> <a href="#top">page top</a></p>
+            </footer>
+
+        </div> <!-- /container -->
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/jquery-1.8.2.min.js"><\/script>')</script>
+
+        <script src="js/bootstrap.min.js"></script>
+        <script src="../src/jquery.cram.min.js"></script>
+
+        <script language="javascript">
+            (function(jQuery) {
+                $(document).ready(function(){
+                    var list = [];
+                    var mincols = 0;
+                    var item, c;
+                    $(".item").each(function(i, el) {
+                        item = {};
+                        item.element = el;
+                        c = Math.ceil($(el).outerWidth()/80);
+                        if (c > mincols){ 
+                            mincols = c;
+                        }
+                        list.push(item);
+                        $(el).click(function(){
+                             if ($(this).hasClass("open")) {
+                                $(this).removeClass('open');
+                            }else{
+                                $(this).addClass('open');
+                            }
+                            update();
+                        });
+                    });
+
+                    var update = function(){
+                        var c, i, l, w, cr, item, itemw, newlist;
+                        newlist = [];
+                        w = $("#items").parent().width()
+                        c = ( w / 80 )<<0
+                        if (c < mincols){
+                            c = mincols;
+                        }
+                        l = list.length;
+                        i = 0;
+                        while(i < l){
+                            item = {};
+                            item.element = list[i].element;
+                            if ($(item.element).hasClass("open")){
+                                item.x = 0;
+                                item.y = $(item.element).position().top;
+                                item.width = c * 80 - 20;
+                            }else{
+                                itemw = $(item.element).width();
+                                $(item.element).css("width","");
+                                item.width = $(item.element).outerWidth();
+                                $(item.element).css("width",itemw + "px");
+                            }
+                            newlist.push(item);
+                            i++;
+                        }
+                        cr = new cram({ cellWidth:60 }, w, newlist, updated);
+                    };
+
+                    var updated = function(data){
+                        var i, l, el, item, style;
+                        l = data.items.length;
+                        i = 0;
+                        while(i < l){
+                            item = data.items[i];
+                            el = $(item.element);
+                            style = {
+                                "top":item.y + "px",
+                                "left":item.x + "px",
+                                "width":item.width + "px"
+                            };
+                            el.animate(style, 600);
+                            i++;
+                        }
+                        $("#items").stop().queue([]);
+                        style = {
+                            "width": data.area.width + "px",
+                            "height": data.area.height + "px"
+                        };
+                        $("#items").animate(style, 600);
+
+                    };
+                    update();
+                    $(window).resize(function(){
+                        update();
+                    });
+                });
+
+            })(jQuery);
+        </script>
+    </body>
+</html>
