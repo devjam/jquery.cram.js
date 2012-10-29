@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Jquery.cram.js : JavaScript library to be placed tightly packed the DOM objects" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Jquery.cram.js</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/devjam/jquery.cram.js">View on GitHub</a>
+
+          <h1 id="project_title">Jquery.cram.js</h1>
+          <h2 id="project_tagline">JavaScript library to be placed tightly packed the DOM objects</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/devjam/jquery.cram.js/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/devjam/jquery.cram.js/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>jquery.cram.js</h1>
+
+<h2>PLUGIN</h2>
+
+<h3>REQUIRE:</h3>
+
+<p>jquery.js<br>
+jquery.easing.js // on use ease</p>
+
+<h3>PARAMETERS:</h3>
+
+<pre><code>itemSelector : "*",
+cellWidth : 100,
+cellHeight : 1,
+marginWidth : 20,
+marginHeight : 20,
+isWindowResizeUpdate : true,
+isAutoLayout : true,
+isDrawSpace : false,
+animation : {
+    delayEach : 0,
+    duration : 0,
+    ease : null 
+}
+</code></pre>
+
+<h3>USAGE:</h3>
+
+<pre><code>$("#wrapper").cram({
+    itemSelector : ".item",
+    cellWidth : 100,
+    cellHeight : 100,
+    marginWidth : 20,
+    marginHeight : 20,
+    animation : {
+        duration : 100,
+        ease : "ExpoOut"
+    }
+});
+</code></pre>
+
+<hr><h2>METHOD:</h2>
+
+<h3>setOptions</h3>
+
+<p>change options</p>
+
+<h4>PARAMETERS:</h4>
+
+<pre><code>itemSelector : "*",
+cellWidth : 100,
+cellHeight : 1,
+marginWidth : 20,
+marginHeight : 20,
+isWindowResizeUpdate : true,
+isAutoLayout : true,
+isDrawSpace : false,
+animation : {
+    delayEach : 0,
+    duration : 0,
+    ease : null
+}
+</code></pre>
+
+<h4>USAGE:</h4>
+
+<pre><code>$("#wrapper").cram.setOptions({
+    cellWidth : 100,
+    cellHeight : 100,
+})
+</code></pre>
+
+<h3>update</h3>
+
+<p>calculate masonry layout<br>
+update area width, area height, items position, spaces<br>
+trigger "onUpdate" on calculated.</p>
+
+<h4>PARAMETERS: null</h4>
+
+<h4>USAGE:</h4>
+
+<pre><code>$("#wrapper").cram.update();
+</code></pre>
+
+<hr><h2>PROPERTY:</h2>
+
+<h3>data("items")</h3>
+
+<p>return items array</p>
+
+<h4>RETURN:</h4>
+
+<pre><code>[
+    {
+        element : DOM,
+        x : Number,
+        y : Number,
+        width : Number,
+        height : Number
+    },
+    ...
+]
+</code></pre>
+
+<h4>USAGE:</h4>
+
+<pre><code>var items = $("#wrapper").data("items");
+</code></pre>
+
+<h3>data("spaces")</h3>
+
+<p>return spaces array</p>
+
+<h4>RETURN:</h4>
+
+<pre><code>[
+  {
+        x : Number,
+        y : Number,
+        width : Number,
+        height : Number
+    },
+    ...
+]
+</code></pre>
+
+<h4>USAGE:</h4>
+
+<pre><code>var spaces = $("#wrapper").data("spaces");
+</code></pre>
+
+<h3>data("area")</h3>
+
+<p>return layout area width and height</p>
+
+<h4>RETURN:</h4>
+
+<pre><code>{
+    width : Number,
+    height : NUmber
+}
+</code></pre>
+
+<h4>USAGE:</h4>
+
+<pre><code>var areasize = $("wrapper").data("area");
+var areaWidth = areasize.width;
+var areaHeight = areasize.height;
+</code></pre>
+
+<hr><h2>EVENT:</h2>
+
+<h3>onUpdate</h3>
+
+<p>dispatch on updated.</p>
+
+<h4>USAGE:</h4>
+
+<pre><code>$("#wrapper").bind("onUpdate", function() {
+    var items = $(this).data("items");
+    var spaces = $(this).data("spaces");
+    var areasize = $(this).data("area");
+});
+</code></pre>
+
+<hr><hr><h2>CLASS</h2>
+
+<p>only calculation operation</p>
+
+<h3>REQUIRE:</h3>
+
+<p>*jquery.js</p>
+
+<h3>PARAMETERS:</h3>
+
+<pre><code>confing : {
+    itemSelector : "*",  
+    cellWidth : 100,  
+    cellHeight : 1,  
+    marginWidth : 20,  
+    marginHeight : 20,  
+    isWindowResizeUpdate : true,  
+    isAutoLayout : true,  
+    isDrawSpace : false,  
+},
+width, // Number  
+list[array], // inner items  
+callback // function  
+</code></pre>
+
+<h4>list array</h4>
+
+<pre><code>[  
+    DOM,  
+    ...  
+]  
+</code></pre>
+
+<p>or  </p>
+
+<pre><code>[  
+    {  
+        element : DOM,  
+        x : Number, // position fixed  
+        y : Number, // position fixed  
+        width : Number,  
+        height : Number  
+    },  
+    ...  
+]
+</code></pre>
+
+<h4>USAGE:</h4>
+
+<pre><code>var opt = null;
+var width = 800;
+var list = $(".item");
+var cramlist = new cram(opt, width, list, function(data){
+    console.log data.items;
+    console.log data.spaces;
+    console.log data.area;
+});
+</code></pre>
+
+<h3>RETURN:</h3>
+
+<h5>data["items"]</h5>
+
+<p>items array  </p>
+
+<pre><code>[  
+    {  
+        element : DOM,  
+        x : Number, // position fixed  
+        y : Number, // position fixed  
+        cols : Number,  
+        rows : Number  
+        width : Number,  
+        height : Number  
+    },  
+    ...  
+]
+</code></pre>
+
+<h4>data["spaces"]</h4>
+
+<p>spaces array  </p>
+
+<pre><code>[  
+    {  
+        x : Number,  
+        y : Number,  
+        width : Number,  
+        height : Number  
+    },  
+    ...  
+]
+</code></pre>
+
+<h4>data["area"]</h4>
+
+<p>layout area width and height</p>
+
+<pre><code>{  
+    width : Number,  
+    height : NUmber  
+}
+</code></pre>
+
+<hr><h2>METHOD:</h2>
+
+<h3>setOptions</h3>
+
+<p>change options</p>
+
+<h4>PARAMETERS:</h4>
+
+<pre><code>itemSelector : "*",  
+cellWidth : 100,  
+cellHeight : 1,  
+marginWidth : 20,  
+marginHeight : 20,  
+isWindowResizeUpdate : true,  
+isAutoLayout : true,  
+isDrawSpace : false,  
+</code></pre>
+
+<h4>USAGE:</h4>
+
+<pre><code>var cramlist = new cram();
+cramlist.setOptions({
+    cellWidth : 100
+})
+</code></pre>
+
+<h3>getData</h3>
+
+<p>make items list, spaces list and area size</p>
+
+<h4>PARAMETERS:</h4>
+
+<pre><code>width, // Number  
+list[array], // inner items  
+callback // function  
+</code></pre>
+
+<p>list array</p>
+
+<pre><code>[  
+    DOM,  
+    ...  
+]  
+</code></pre>
+
+<p>or  </p>
+
+<pre><code>[  
+    {  
+        element : DOM,  
+        x : Number,  
+        y : Number,  
+        width : Number,  
+        height : Number  
+    },  
+    ...  
+]
+</code></pre>
+
+<h4>USAGE:</h4>
+
+<pre><code>var width = 800;
+var list = $(".item");
+var cramlist = new cram();
+cramlist.getData(width, list, function(data){
+    console.log data.items;
+    console.log data.spaces;
+    console.log data.area;
+});
+</code></pre>
+
+<h3>RETURN:</h3>
+
+<h5>data["items"]</h5>
+
+<p>items array  </p>
+
+<pre><code>[  
+    {  
+        element : DOM,  
+        x : Number,  
+        y : Number,  
+        cols : Number,  
+        rows : Number  
+        width : Number,  
+        height : Number  
+    },  
+    ...  
+]
+</code></pre>
+
+<h4>data["spaces"]</h4>
+
+<p>spaces array  </p>
+
+<pre><code>[  
+    {  
+        x : Number,  
+        y : Number,  
+        width : Number,  
+        height : Number  
+    },  
+    ...  
+]
+</code></pre>
+
+<h4>data["area"]</h4>
+
+<p>layout area width and height</p>
+
+<pre><code>{  
+    width : Number,  
+    height : NUmber  
+}
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Jquery.cram.js maintained by <a href="https://github.com/devjam">devjam</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
