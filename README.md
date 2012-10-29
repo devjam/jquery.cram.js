@@ -225,7 +225,7 @@ or
 
 ### RETURN:
 
-##### data\[\"items\"\]
+##### data\["items"\]
 items array  
 
     [  
@@ -242,7 +242,7 @@ items array
     ]
 
 
-#### data\[\"spaces\"\]
+#### data\["spaces"\]
 spaces array  
 
     [  
@@ -256,7 +256,7 @@ spaces array
     ]
 
 
-#### data\[\"area\"\]
+#### data\["area"\]
 layout area width and height
 
     {  
@@ -337,7 +337,7 @@ list array
 ### RETURN:
 
 
-##### data\[\"items\"\]
+##### data\["items"\]
 items array  
 
     [  
@@ -354,7 +354,7 @@ items array
     ]
 
 
-#### data\[\"spaces\"\]
+#### data\["spaces"\]
 spaces array  
 
     [  
@@ -368,7 +368,7 @@ spaces array
     ]
 
 
-#### data\[\"area\"\]
+#### data\["area"\]
 layout area width and height
 
     {  
