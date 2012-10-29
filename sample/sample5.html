@@ -17,6 +17,9 @@
                 padding-top: 60px;
                 padding-bottom: 40px;
             }
+            .item {
+                cursor: pointer;
+            }
         </style>
         <link rel="stylesheet" href="css/main.css">
 
@@ -45,6 +48,7 @@
                 <li><a href="sample4.html">sample4: draw spaces</a></li>
                 <li class="active"><a href="sample5.html">sample5: only calculation</a></li>
             </ul>
+            <h2>click to toggle expand</h2>
             <ul id="items" class="clearfix">
                 <li class="item col2"><section class="box row1"><h1>1</h1></section></li>
                 <li class="item col4"><section class="box row1"><h1>2</h1></section></li>
@@ -159,9 +163,20 @@
                             el.animate(style, 600);
                             i++;
                         }
+                        $("#items").stop().queue([]);
+                        style = {
+                            "width": data.area.width + "px",
+                            "height": data.area.height + "px"
+                        };
+                        $("#items").animate(style, 600);
+
                     };
                     update();
+                    $(window).resize(function(){
+                        update();
+                    });
                 });
+
             })(jQuery);
         </script>
     </body>
