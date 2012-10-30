@@ -118,7 +118,7 @@ null
     ],
     area: {
         width : Number,
-        height : NUmber
+        height : Number
     }
 
 
@@ -246,7 +246,7 @@ layout area width and height
 
     {  
     	width : Number,  
-    	height : NUmber  
+    	height : Number  
     }
 
 
@@ -358,5 +358,5 @@ layout area width and height
 
     {  
     	width : Number,  
-    	height : NUmber  
+    	height : Number  
     }
