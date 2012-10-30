@@ -97,8 +97,8 @@
                     $("#items").cram({
                         cellWidth: 60
                      });
-                    $("#items").bind("onUpdate", function(){
-                        $(this).unbind("onUpdate");
+                    $("#items").bind("cram.update", function(){
+                        $(this).unbind("cram.update");
                         $(this).cram.setOptions({
                            animation: {
                                 duration: 800

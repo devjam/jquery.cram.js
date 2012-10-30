@@ -134,10 +134,10 @@
                         cellWidth: 0,
                         isDrawSpace: true
                      });
-                    $("#items").bind("onUpdate", function(){
-                        $(this).unbind("onUpdate");
+                    $("#items").bind("cram.update", function(){
+                        $(this).unbind("cram.update");
                         $(this).cram.setOptions({
-                           animation: {
+                            animation: {
                                 duration: 800
                             }
                         });
