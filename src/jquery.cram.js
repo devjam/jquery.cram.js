@@ -1,5 +1,5 @@
 /*
-jQuery.cram.js v0.3.3
+jQuery.cram.js v0.3.4
 */
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -13,7 +13,7 @@ jQuery.cram.js v0.3.3
       cram.defaultConfig = {
         itemSelector: "*",
         cellWidth: 100,
-        cellHeight: 1,
+        cellHeight: 10,
         marginWidth: 20,
         marginHeight: 20,
         isWindowResizeUpdate: true,
@@ -85,12 +85,13 @@ jQuery.cram.js v0.3.3
           cols2 = Math.ceil(this.itemWidthMax / o.eWidth);
           this.cols = Math.max(cols1, cols2);
           this.map = this.makeGrids();
-          return setTimeout(this.updateEachItem, 0);
+          return this.tempTimer = setTimeout(this.updateEachItem, 0);
         }
       };
 
       cram.prototype.updateEachItem = function() {
         var item;
+        clearTimeout(this.tempTimer);
         if (this.itemNum < this.list_temp.length) {
           item = this.list_temp[this.itemNum];
           if ((item.x != null) && (item.y != null)) {
@@ -99,15 +100,16 @@ jQuery.cram.js v0.3.3
             this.map = this.searchPosOnGrid(this.map, item);
           }
           this.itemNum++;
-          return setTimeout(this.updateEachItem, 0);
+          return this.tempTimer = setTimeout(this.updateEachItem, 0);
         } else {
           this.list = this.list_temp;
-          return setTimeout(this.updated, 0);
+          return this.tempTimer = setTimeout(this.updated, 0);
         }
       };
 
       cram.prototype.updated = function() {
         var areaWidth, data, o;
+        clearTimeout(this.tempTimer);
         o = this.options;
         areaWidth = this.cols * o.eWidth - o.marginWidth;
         data = {};
@@ -228,12 +230,13 @@ jQuery.cram.js v0.3.3
       };
 
       cram.prototype.searchPosOnGrid = function(matrix, item) {
-        var br, col_i, col_l, cols, i, j, l, o, offx, offy, row_i, row_l, val;
+        var br, col_i, col_l, i, j, l, mcols, mrows, o, offx, offy, row_i, row_l, val;
         o = this.options;
-        cols = matrix[0].length - item.cols + 1;
+        mcols = matrix[0].length - item.cols + 1;
+        mrows = matrix.length;
         offx = 0;
         offy = 0;
-        l = matrix.length;
+        l = mrows;
         i = this.startRow;
         while (i < l) {
           br = matrix[i].join();
@@ -244,40 +247,44 @@ jQuery.cram.js v0.3.3
           }
           i++;
         }
-        l = l - item.rows;
+        l = mrows - item.rows;
         i = this.startRow;
         while (i < l) {
           j = 0;
-          while (j < cols) {
+          while (j < mcols) {
             if (matrix[i][j] === 0) {
-              val = 0;
               row_l = item.rows;
               col_l = item.cols;
-              row_i = 0;
-              col_i = 0;
-              while (col_i < col_l) {
-                val += matrix[i + row_i][j + col_i];
-                col_i++;
-              }
-              if (val === 0) {
-                row_i++;
-                while (row_i < row_l) {
-                  col_i = 0;
-                  while (col_i < col_l) {
-                    val += matrix[i + row_i][j + col_i];
-                    col_i++;
-                  }
-                  row_i++;
+              row_i = i + row_l - 1;
+              col_i = j + col_l - 1;
+              if (matrix[row_i][col_i] === 0) {
+                val = 0;
+                row_i = 0;
+                col_i = 0;
+                while (col_i < col_l) {
+                  val += matrix[i + row_i][j + col_i];
+                  col_i++;
                 }
                 if (val === 0) {
-                  offx = j;
-                  offy = i;
-                  if (offy > this.max_offy || (offx > this.max_offx && offy >= this.max_offy)) {
-                    this.max_offx = offx;
-                    this.max_offy = offy;
+                  row_i++;
+                  while (row_i < row_l) {
+                    col_i = 0;
+                    while (col_i < col_l) {
+                      val += matrix[i + row_i][j + col_i];
+                      col_i++;
+                    }
+                    row_i++;
                   }
-                  j += cols;
-                  i += l;
+                  if (val === 0) {
+                    offx = j;
+                    offy = i;
+                    if (offy > this.max_offy || (offx > this.max_offx && offy >= this.max_offy)) {
+                      this.max_offx = offx;
+                      this.max_offy = offy;
+                    }
+                    j += mcols;
+                    i += mrows;
+                  }
                 }
               }
             }
@@ -415,11 +422,15 @@ jQuery.cram.js v0.3.3
           return null;
         };
         $.fn.cram.update = function() {
-          var c, list, w;
+          var list, w;
+          clearTimeout(_this.tempTimer);
           _this.nowUpdate = true;
           w = $(_this).parent().width();
           list = $(_this).children(options.itemSelector);
-          return c = new cram(options, w, list, updateDatas);
+          return _this.cr = new cram(options, w, list, updateDatas);
+        };
+        $.fn.cram.getData = function() {
+          return $.data(_this, "cram");
         };
         startResize = function() {
           if (!options.isWindowResizeUpdate || _this.nowUpdate) {
@@ -432,6 +443,9 @@ jQuery.cram.js v0.3.3
         };
         resize = function() {
           var cols, o;
+          if (_this.resizeTimer != null) {
+            clearTimeout(_this.resizeTimer);
+          }
           o = options;
           cols = ($(_this).parent().width() / o.eWidth) << 0;
           $(_this).children(o.itemSelector).each(function(i, el) {
@@ -445,16 +459,18 @@ jQuery.cram.js v0.3.3
             return;
           }
           _this.cols = cols;
-          return setTimeout($(_this).cram.update, 0);
+          return _this.tempTimer = setTimeout($(_this).cram.update, 0);
         };
         updateDatas = function(data) {
-          var o;
+          var o, obj;
           o = options;
           $(".space").remove();
-          $(_this).data("items", data.items);
-          $(_this).data("spaces", data.spaces);
-          $(_this).data("area", data.area);
-          return setTimeout(function() {
+          obj = $.data(_this, "cram");
+          obj.items = data.items;
+          obj.spaces = data.spaces;
+          obj.area = data.area;
+          _this.tempTimer = setTimeout(function() {
+            clearTimeout(_this.tempTimer);
             if (o.isAutoLayout) {
               drawItems(data.items, data.area.width);
               if (o.isDrawSpace) {
@@ -465,10 +481,12 @@ jQuery.cram.js v0.3.3
               return updated();
             }
           }, 0);
+          return _this.cr = null;
         };
         updated = function() {
-          $(_this).trigger("onUpdate");
-          return setTimeout(function() {
+          $(_this).trigger("cram.update");
+          return _this.tempTimer = setTimeout(function() {
+            clearTimeout(_this.tempTimer);
             return _this.nowUpdate = false;
           }, 1);
         };
@@ -543,6 +561,7 @@ jQuery.cram.js v0.3.3
           }
           return null;
         };
+        $.data(this, "cram", {});
         this.list = [];
         o = options;
         o.eWidth = o.cellWidth + o.marginWidth;

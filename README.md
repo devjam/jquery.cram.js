@@ -1,5 +1,10 @@
 jquery.cram.js
 ======================
+## DEMO
+<http://devjam.github.com/jquery.cram.js/>
+
+---
+
 ## PLUGIN
 
 ### REQUIRE:
@@ -75,24 +80,24 @@ update area width, area height, items position, spaces
 trigger "onUpdate" on calculated.
 
 
-#### PARAMETERS: null
+#### PARAMETERS:
+null
 
 
 #### USAGE:
     $("#wrapper").cram.update();
 
 
----
+### getData
+return items array, spaces array, layout area width and height
 
 
-## PROPERTY:
-
-### data("items")
-return items array
+#### PARAMETERS:
+null
 
 
 #### RETURN:
-    [
+    items: [
     	{
     		element : DOM,
     		x : Number,
@@ -101,50 +106,29 @@ return items array
     		height : Number
     	},
     	...
-    ]
-
-
-#### USAGE:
-    var items = $("#wrapper").data("items");
-
-
-
-### data("spaces")
-return spaces array
-
-
-#### RETURN:
-    [
+    ],
+    spaces: [
       {
-    		x : Number,
-    		y : Number,
-    		width : Number,
-    		height : Number
-    	},
-    	...
-    ]
-
-
-#### USAGE:
-    var spaces = $("#wrapper").data("spaces");
-
-
-
-### data("area")
-return layout area width and height
-
-
-#### RETURN:
-    {
-    	width : Number,
-    	height : NUmber
+            x : Number,
+            y : Number,
+            width : Number,
+            height : Number
+        },
+        ...
+    ],
+    area: {
+        width : Number,
+        height : NUmber
     }
 
 
 #### USAGE:
-    var areasize = $("wrapper").data("area");
-    var areaWidth = areasize.width;
-    var areaHeight = areasize.height;
+    var data = $("#wrapper").cram.getData();
+        var items = data.items;
+        var spaces = data.spaces;
+        var areasize = data.area;
+        var areaWidth = areasize.width;
+        var areaHeight = areasize.height;
 
 
 ---
@@ -152,11 +136,11 @@ return layout area width and height
 
 ## EVENT:
 
-### onUpdate
+### cram.update
 dispatch on updated.
 
 #### USAGE:
-    $("#wrapper").bind("onUpdate", function() {
+    $("#wrapper").bind("cram.update", function() {
     	var items = $(this).data("items");
     	var spaces = $(this).data("spaces");
     	var areasize = $(this).data("area");
@@ -192,24 +176,24 @@ only calculation operation
     callback // function  
 
 
-####list array
-    [  
-    	DOM,  
-    	...  
-    ]  
-
-or  
-
-    [  
-    	{  
-    		element : DOM,  
-    		x : Number, // position fixed  
-    		y : Number, // position fixed  
-    		width : Number,  
-    		height : Number  
-    	},  
-    	...  
-    ]
+> list array
+>     [  
+>     	DOM,  
+>     	...  
+>     ]  
+> 
+> or  
+> 
+>     [  
+>     	{  
+>     		element : DOM,  
+>     		x : Number, // position fixed  
+>     		y : Number, // position fixed  
+>     		width : Number,  
+>     		height : Number  
+>     	},  
+>     	...  
+>     ]
 
 
 #### USAGE:
@@ -224,6 +208,7 @@ or
 
 
 ### RETURN:
+return to callback function parameters
 
 ##### data\["items"\]
 items array  
@@ -302,25 +287,25 @@ make items list, spaces list and area size
     list[array], // inner items  
     callback // function  
 
-list array
-
-    [  
-    	DOM,  
-    	...  
-    ]  
-
- or  
-
-    [  
-    	{  
-    		element : DOM,  
-    		x : Number,  
-    		y : Number,  
-    		width : Number,  
-    		height : Number  
-    	},  
-    	...  
-    ]
+> list array
+> 
+>     [  
+>     	DOM,  
+>     	...  
+>     ]  
+> 
+>  or  
+> 
+>     [  
+>     	{  
+>     		element : DOM,  
+>     		x : Number,  
+>     		y : Number,  
+>     		width : Number,  
+>     		height : Number  
+>     	},  
+>     	...  
+>     ]
 
 
 #### USAGE:

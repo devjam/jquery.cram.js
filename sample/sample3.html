@@ -27,10 +27,10 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="#">jQuery.cram.js</a>
+                    <a class="brand" href="http://devjam.github.com/jquery.cram.js/">jQuery.cram.js</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li><a href="#">github</a></li>
+                            <li><a href="https://github.com/devjam/jquery.cram.js">github</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -97,8 +97,8 @@
                     $("#items").cram({
                         cellWidth: 60
                      });
-                    $("#items").bind("onUpdate", function(){
-                        $(this).unbind("onUpdate");
+                    $("#items").bind("cram.update", function(){
+                        $(this).unbind("cram.update");
                         $(this).cram.setOptions({
                            animation: {
                                 duration: 800

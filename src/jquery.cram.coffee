@@ -1,5 +1,5 @@
 ###
-jQuery.cram.js v0.3.3
+jQuery.cram.js v0.3.4
 ###
 do (jQuery) ->
 	document = window.document
@@ -9,7 +9,7 @@ do (jQuery) ->
 		@defaultConfig :
 			itemSelector : "*"
 			cellWidth : 100
-			cellHeight : 1
+			cellHeight : 10
 			marginWidth : 20 
 			marginHeight : 20
 			isWindowResizeUpdate : true
@@ -58,9 +58,10 @@ do (jQuery) ->
 				@cols = Math.max cols1, cols2
 
 				@map = @makeGrids()
-				setTimeout @updateEachItem, 0
+				@tempTimer = setTimeout @updateEachItem, 0
 
 		updateEachItem: =>
+			clearTimeout @tempTimer
 			if @itemNum < @list_temp.length
 				item = @list_temp[@itemNum]
 				if item.x? and item.y?
@@ -68,12 +69,13 @@ do (jQuery) ->
 				else
 					@map = @searchPosOnGrid @map, item
 				@itemNum++
-				setTimeout @updateEachItem, 0
+				@tempTimer = setTimeout @updateEachItem, 0
 			else
 				@list = @list_temp
-				setTimeout @updated, 0
+				@tempTimer = setTimeout @updated, 0
 
 		updated: =>
+			clearTimeout @tempTimer
 			o = @options
 			areaWidth = @cols * o.eWidth - o.marginWidth
 			data = {}
@@ -183,10 +185,11 @@ do (jQuery) ->
 
 		searchPosOnGrid: (matrix, item)=>
 			o = @options
-			cols = matrix[0].length - item.cols + 1
+			mcols = matrix[0].length - item.cols + 1
+			mrows = matrix.length
 			offx = 0
 			offy = 0
-			l = matrix.length
+			l = mrows
 			i = @startRow
 			while i < l
 				br = matrix[i].join()
@@ -196,43 +199,47 @@ do (jQuery) ->
 					@startRow++
 				i++
 
-			l = l - item.rows
+			l = mrows - item.rows
 			i = @startRow
 			while i < l
 				j = 0
-				while j < cols
+				while j < mcols
 					#左上1マス空き確認
 					if matrix[i][j] == 0
-						val = 0
-						#コンテンツ分の空きがあるか確認
+						#右下1マス空き確認
 						row_l = item.rows
 						col_l = item.cols
-						row_i = 0
-						col_i = 0
-						while col_i < col_l
-							val += matrix[i + row_i][j + col_i]
-							col_i++
-						if val == 0
-							row_i++
-							while row_i < row_l
-								col_i = 0
-								while col_i < col_l
-									val += matrix[i + row_i][j + col_i]
-									col_i++
-								row_i++
-
+						row_i = i + row_l - 1
+						col_i = j + col_l - 1
+						if matrix[row_i][col_i] == 0
+							val = 0
+							#コンテンツ分の空きがあるか確認
+							row_i = 0
+							col_i = 0
+							while col_i < col_l
+								val += matrix[i + row_i][j + col_i]
+								col_i++
 							if val == 0
-								#空きあり
-								#位置決定
-								offx = j
-								offy = i
+								row_i++
+								while row_i < row_l
+									col_i = 0
+									while col_i < col_l
+										val += matrix[i + row_i][j + col_i]
+										col_i++
+									row_i++
 
-								if offy > @max_offy or (offx > @max_offx and offy >= @max_offy)
-									@max_offx = offx
-									@max_offy = offy
+								if val == 0
+									#空き領域あり
+									#位置決定
+									offx = j
+									offy = i
 
-								j += cols
-								i += l
+									if offy > @max_offy or (offx > @max_offx and offy >= @max_offy)
+										@max_offx = offx
+										@max_offy = offy
+
+									j += mcols
+									i += mrows
 
 					j++
 				i++
@@ -353,10 +360,14 @@ do (jQuery) ->
 				null
 
 			$.fn.cram.update = =>
+				clearTimeout @tempTimer
 				@nowUpdate = true
 				w = $(@).parent().width()
 				list = $(@).children(options.itemSelector)
-				c = new cram options, w, list, updateDatas
+				@cr = new cram options, w, list, updateDatas
+
+			$.fn.cram.getData = =>
+				$.data(@, "cram")
 
 			#-------------------------------------------
 			# onResize action
@@ -368,6 +379,8 @@ do (jQuery) ->
 				@resizeTimer = setTimeout resize, 200
 
 			resize = =>
+				if @resizeTimer?
+					clearTimeout @resizeTimer
 				o = options
 				cols = ( $(@).parent().width()/o.eWidth )<<0
 				$(@).children(o.itemSelector).each (i, el)=>
@@ -377,17 +390,19 @@ do (jQuery) ->
 				if cols == @cols
 					return
 				@cols = cols
-				setTimeout $(@).cram.update, 0
+				@tempTimer = setTimeout $(@).cram.update, 0
 
 			#-------------------------------------------
 			# update action
 			updateDatas = (data)=>
 				o = options
 				$(".space").remove()
-				$(@).data "items", data.items
-				$(@).data "spaces", data.spaces
-				$(@).data "area", data.area
-				setTimeout =>
+				obj = $.data(@, "cram")
+				obj.items = data.items
+				obj.spaces = data.spaces
+				obj.area = data.area
+				@tempTimer = setTimeout =>
+					clearTimeout @tempTimer
 					if o.isAutoLayout
 						drawItems data.items, data.area.width
 						if o.isDrawSpace
@@ -396,10 +411,12 @@ do (jQuery) ->
 					else
 						updated()
 				, 0
+				@cr = null
 
 			updated = =>
-				$(@).trigger("onUpdate")
-				setTimeout =>
+				$(@).trigger("cram.update")
+				@tempTimer = setTimeout =>
+					clearTimeout @tempTimer
 					@nowUpdate = false
 				, 1
 
@@ -468,6 +485,7 @@ do (jQuery) ->
 
 			#-------------------------------------------
 			# init
+			$.data(@, "cram", {});
 			@list = []
 			o = options
 			o.eWidth = o.cellWidth + o.marginWidth
