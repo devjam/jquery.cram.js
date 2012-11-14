@@ -1,5 +1,5 @@
 ###
-jQuery.cram.js v0.3.4
+jQuery.cram.js v0.3.5
 ###
 do (jQuery) ->
 	document = window.document
@@ -21,7 +21,7 @@ do (jQuery) ->
 				ease : null
 
 		constructor: (config, width, list, callback)->
-			@options = $.extend null, cram.defaultConfig, config
+			@options = $.extend true, null, cram.defaultConfig, config
 			o = @options
 			o.eWidth = o.cellWidth + o.marginWidth
 			o.eHeight = o.cellHeight + o.marginHeight
@@ -31,7 +31,7 @@ do (jQuery) ->
 				@getData width, list, callback
 
 		setOptions: (config)=>
-			@options = $.extend @options, config
+			@options = $.extend true, @options, config
 			o = @options
 			o.eWidth = o.cellWidth + o.marginWidth
 			o.eHeight = o.cellHeight + o.marginHeight

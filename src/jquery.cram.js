@@ -1,5 +1,5 @@
 /*
-jQuery.cram.js v0.3.4
+jQuery.cram.js v0.3.5
 */
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -46,7 +46,7 @@ jQuery.cram.js v0.3.4
         this.setOptions = __bind(this.setOptions, this);
 
         var o;
-        this.options = $.extend(null, cram.defaultConfig, config);
+        this.options = $.extend(true, null, cram.defaultConfig, config);
         o = this.options;
         o.eWidth = o.cellWidth + o.marginWidth;
         o.eHeight = o.cellHeight + o.marginHeight;
@@ -58,7 +58,7 @@ jQuery.cram.js v0.3.4
 
       cram.prototype.setOptions = function(config) {
         var o;
-        this.options = $.extend(this.options, config);
+        this.options = $.extend(true, this.options, config);
         o = this.options;
         o.eWidth = o.cellWidth + o.marginWidth;
         return o.eHeight = o.cellHeight + o.marginHeight;
