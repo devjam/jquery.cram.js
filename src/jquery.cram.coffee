@@ -1,5 +1,9 @@
 ###
 jQuery.cram.js v0.3.5
+
+Copyright (c) Devjam / SHIFTBRAIN INC.
+Licensed under the MIT license.
+https://github.com/devjam
 ###
 do (jQuery) ->
 	document = window.document
