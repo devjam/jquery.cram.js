@@ -351,12 +351,12 @@ do (jQuery) ->
 	#-------------------------------------------
 	# plugin
 	$.fn.cram = (config) ->
-		options = $.extend(cram.defaultConfig, config);
+		options = $.extend(true, null, cram.defaultConfig, config);
 		@each () ->
 			#-------------------------------------------
 			# plugin method
 			$.fn.cram.setOptions = (arg) =>
-				options = $.extend(options, arg)
+				options = $.extend(true, options, arg)
 				null
 
 			$.fn.cram.update = =>

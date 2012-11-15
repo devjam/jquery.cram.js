@@ -413,12 +413,12 @@ jQuery.cram.js v0.3.5
     })();
     $.fn.cram = function(config) {
       var options;
-      options = $.extend(cram.defaultConfig, config);
+      options = $.extend(true, null, cram.defaultConfig, config);
       this.each(function() {
         var drawArea, drawItems, drawSpace, o, resize, startResize, updateDatas, updated,
           _this = this;
         $.fn.cram.setOptions = function(arg) {
-          options = $.extend(options, arg);
+          options = $.extend(true, options, arg);
           return null;
         };
         $.fn.cram.update = function() {
