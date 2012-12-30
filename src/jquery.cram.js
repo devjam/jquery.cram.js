@@ -1,10 +1,12 @@
 /*
-jQuery.cram.js v0.3.5
+jQuery.cram.js v0.3.6
 
 Copyright (c) Devjam / SHIFTBRAIN INC.
 Licensed under the MIT license.
 https://github.com/devjam
 */
+
+
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -182,7 +184,7 @@ https://github.com/devjam
         cols = this.cols;
         l = this.list_temp.length;
         i = 0;
-        rows = 0;
+        rows = 1;
         while (i < l) {
           rows += this.list_temp[i].rows;
           i++;

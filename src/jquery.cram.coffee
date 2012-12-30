@@ -1,5 +1,5 @@
 ###
-jQuery.cram.js v0.3.5
+jQuery.cram.js v0.3.6
 
 Copyright (c) Devjam / SHIFTBRAIN INC.
 Licensed under the MIT license.
@@ -142,7 +142,7 @@ do (jQuery) ->
 
 			l = @list_temp.length
 			i = 0
-			rows = 0
+			rows = 1
 			while i < l
 				rows += @list_temp[i].rows
 				i++
@@ -157,7 +157,6 @@ do (jQuery) ->
 					j++
 				matrix.push line
 				i++
-
 			matrix
 
 		setOnGrid: (matrix, item)=>
@@ -261,7 +260,8 @@ do (jQuery) ->
 
 			cols = matrix[0].length
 
-			#計算の必要ないエリアを削除
+			# 計算の必要ないエリアを削除
+			# trim whitespace
 			rows = matrix.length
 			i = 0
 			while i < cols
@@ -288,11 +288,13 @@ do (jQuery) ->
 			while i < rows
 				j = 0
 				while j < cols
-					#左上1マス空き確認
+					# 左上1マス空き確認
+					# check white space left top
 					if matrix[i][j] == 0
 						v = @getSpaceRectSize(matrix, j, i)
 
 						# スペース追加
+						# add white space
 						obj=
 							x: j * o.eWidth
 							y: i * o.cellHeight
@@ -303,7 +305,8 @@ do (jQuery) ->
 						if obj.width > 0 and obj.height > 0
 							ary.push obj
 
-						# 空き塗りつぶし	
+						# 空き塗りつぶし
+						# change cell from white to filled	
 						tj_l = j + v.cols
 						ti_l = i + v.rows
 						ti = i
@@ -321,7 +324,8 @@ do (jQuery) ->
 		getSpaceRectSize: (matrix, x, y)->
 			w = 1
 			h = 1
-			#何列空きか確認
+			# 何列空きか確認
+			# check white space colums
 			i = x + 1
 			l = matrix[0].length
 			while i < l
@@ -331,7 +335,8 @@ do (jQuery) ->
 					w++
 					i++
 
-			#何行空きか確認
+			# 何行空きか確認
+			# check white space rows
 			l = w
 			flg = true
 			while flg
